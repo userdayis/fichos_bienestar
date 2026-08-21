@@ -8,22 +8,23 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased relative">
-        <div class="absolute top-0 w-full bg-sena h-3 shadow-md"></div>
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-50">
-            <div>
+    <body class="font-sans text-theme-cream antialiased relative">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-theme-bg">
+            <div class="mb-6 text-center">
                 <a href="/">
-                    <h1 class="text-4xl font-extrabold text-sena uppercase tracking-wide">SENA</h1>
+                    <div class="text-xs tracking-[0.2em] text-theme-mustard font-semibold mb-1 uppercase">Sistema de Vales</div>
+                    <h1 class="text-3xl font-extrabold text-white">Día del Aprendiz</h1>
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-8 bg-white shadow-lg overflow-hidden sm:rounded-xl border-t-4 border-sena">
+            <div class="w-full sm:max-w-md mt-2 px-6 py-8 bg-theme-panel shadow-2xl overflow-hidden sm:rounded-2xl border border-white/10">
                 {{ $slot }}
             </div>
         </div>

@@ -7,41 +7,48 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <label for="email" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Correo electrónico</label>
+            <input id="email" type="email" name="email" :value="old('email')"
+                class="block w-full bg-theme-bg border border-white/20 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-theme-mustard focus:ring-1 focus:ring-theme-mustard transition-colors placeholder-gray-600"
+                placeholder="admin@sena.edu.co"
+                required autofocus autocomplete="username">
+            <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-400 text-xs" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <label for="password" class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Contraseña</label>
+            <input id="password" type="password" name="password"
+                class="block w-full bg-theme-bg border border-white/20 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-theme-mustard focus:ring-1 focus:ring-theme-mustard transition-colors placeholder-gray-600"
+                placeholder="••••••••"
+                required autocomplete="current-password">
+            <x-input-error :messages="$errors->get('password')" class="mt-2 text-red-400 text-xs" />
         </div>
 
         <!-- Remember Me -->
         <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+            <label for="remember_me" class="inline-flex items-center gap-2 cursor-pointer">
+                <input id="remember_me" type="checkbox" class="rounded border-white/20 bg-theme-bg text-theme-mustard shadow-sm focus:ring-theme-mustard" name="remember">
+                <span class="text-sm text-gray-400">Recordarme</span>
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
+        <div class="mt-6 flex items-center justify-between">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a class="text-xs text-gray-500 hover:text-theme-mustard transition-colors" href="{{ route('password.request') }}">
+                    ¿Olvidaste tu contraseña?
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+            <button type="submit" class="px-6 py-3 bg-theme-mustard text-[#4a3200] hover:bg-yellow-500 font-extrabold rounded-xl transition-colors shadow-lg text-sm">
+                Ingresar →
+            </button>
         </div>
     </form>
+
+    <div class="mt-6 text-center text-xs text-gray-600 border-t border-white/10 pt-4">
+        <a href="{{ url('/') }}" class="text-gray-500 hover:text-theme-mustard transition-colors">
+            ← Volver al portal de aprendices
+        </a>
+    </div>
 </x-guest-layout>

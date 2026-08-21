@@ -11,7 +11,7 @@ class ImportController extends Controller
 {
     public function show()
     {
-        return view('admin.import');
+        return view('admin.importar');
     }
 
     public function import(Request $request)

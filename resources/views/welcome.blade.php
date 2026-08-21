@@ -6,35 +6,32 @@
     <title>Día del Aprendiz - SENA</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased font-sans flex items-center justify-center min-h-screen relative">
-    <div class="absolute top-0 w-full bg-sena h-3 shadow-md"></div>
-    <div class="max-w-xl w-full mx-4 bg-white rounded-xl shadow-lg p-10 text-center border-t-4 border-sena">
-        <h1 class="text-4xl font-extrabold text-sena mb-2 uppercase tracking-wide">SENA</h1>
-        <h2 class="text-2xl font-bold text-gray-700 mb-4">Día del Aprendiz</h2>
-        <p class="text-gray-500 mb-8 text-lg">Bienvenido al sistema de registro y control de fichos y actividades.</p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            @if (Route::has('login'))
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="px-8 py-3 bg-sena hover:bg-sena-dark text-white rounded-lg font-semibold transition-colors shadow-md">
-                        Ir al Dashboard
-                    </a>
-                @else
-                    <a href="{{ route('login') }}" class="px-8 py-3 bg-sena hover:bg-sena-dark text-white rounded-lg font-semibold transition-colors shadow-md">
-                        Iniciar Sesión
-                    </a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg font-semibold transition-colors shadow-sm">
-                            Registrarse
-                        </a>
-                    @endif
-                @endauth
-            @endif
+<body class="bg-theme-bg text-theme-cream antialiased font-sans flex items-center justify-center min-h-screen relative">
+    <div class="max-w-lg w-full mx-4 text-center">
+        <!-- Header -->
+        <div class="mb-10">
+            <div class="text-xs tracking-[0.2em] text-theme-mustard font-semibold mb-2 uppercase">Día del aprendiz · SENA</div>
+            <h1 class="text-5xl font-extrabold text-white mb-4">El ficho</h1>
+            <p class="text-gray-400 text-sm max-w-sm mx-auto">Sistema de registro y control de vales para el Día del Aprendiz.</p>
         </div>
-        
-        <div class="mt-12 text-sm text-gray-400 font-medium">
-            &copy; {{ date('Y') }} SENA - Todos los derechos reservados.
+
+        <!-- Card -->
+        <div class="bg-theme-panel rounded-2xl shadow-2xl p-8 text-left border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-2">Bienvenido</h2>
+            <p class="text-gray-400 mb-8 text-sm leading-relaxed">Inicia sesión para acceder al panel de control o validación de fichos.</p>
+            
+            <div class="flex flex-col gap-4">
+                <a href="{{ route('login') }}" class="w-full py-3 bg-theme-mustard text-[#4a3200] hover:bg-yellow-500 font-extrabold rounded-xl transition-colors shadow-lg text-center text-lg">
+                    Iniciar Sesión
+                </a>
+                <a href="{{ url('/') }}" class="w-full py-3 bg-white/5 border border-white/20 text-gray-300 hover:bg-white/10 font-bold rounded-xl transition-colors text-center">
+                    Ver mi ficho (Aprendiz)
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-6 text-xs text-gray-600">
+            &copy; {{ date('Y') }} SENA &middot; Sistema de Fichos
         </div>
     </div>
 </body>
