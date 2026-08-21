@@ -7,7 +7,11 @@ mkdir -p /var/www/storage/framework/views
 mkdir -p /var/www/storage/logs
 mkdir -p /var/www/bootstrap/cache
 
-# Ejecutar descubrimiento de paquetes, migraciones y seeders
+# Asegurar que APP_KEY esté presente
+if [ -z "$APP_KEY" ]; then
+    echo "APP_KEY no detectada. Generando una nueva..."
+    export APP_KEY=$(php artisan key:generate --show)
+fi
 php artisan package:discover --ansi
 php artisan migrate --force --seed
 
