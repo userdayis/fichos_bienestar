@@ -1,4 +1,7 @@
-FROM php:8.4-fpm
+FROM php:8.3-fpm
+
+# Configurar variables de entorno para Composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
