@@ -14,6 +14,13 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                sena: {
+                    DEFAULT: '#39A900',
+                    light: '#53C31A',
+                    dark: '#2A7F00',
+                }
+            }
         },
     },
 
