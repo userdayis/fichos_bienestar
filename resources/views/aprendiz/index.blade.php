@@ -1,28 +1,42 @@
 @extends('layouts.public')
 
 @section('content')
-    <div class="max-w-md w-full mx-4 bg-white rounded-xl shadow-lg p-8 text-center border-t-4 border-sena">
-        <h1 class="text-3xl font-extrabold text-sena mb-2 uppercase">El Ficho</h1>
-        <p class="text-gray-500 mb-8">Ingresa tu número de documento para consultar el estado de tu carnet y actividades.</p>
-        
-        @if($errors->any())
-            <div class="bg-red-50 text-red-600 p-3 rounded-md mb-6 text-sm border border-red-200 text-left">
-                {{ $errors->first() }}
-            </div>
-        @endif
+<div class="p-8 pt-12 flex flex-col h-full">
+    <!-- Header Indicator -->
+    <div class="flex items-center gap-2 mb-8">
+        <div class="w-2 h-2 rounded-full bg-theme-mustard"></div>
+        <span class="text-[10px] tracking-widest text-gray-300 font-medium">ALIMENTACIÓN &middot; SENA</span>
+    </div>
 
-        <form action="{{ route('aprendiz.buscar') }}" method="POST" class="flex flex-col gap-4">
-            @csrf
-            <div>
-                <input type="text" name="documento" placeholder="Ej: 1045234812" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-sena focus:border-sena outline-none transition-colors">
-            </div>
-            <button type="submit" class="w-full py-3 bg-sena hover:bg-sena-dark text-white font-bold rounded-lg transition-colors shadow-md text-lg">
+    <div class="text-xs text-theme-mustard font-semibold tracking-wider mb-2">PASO 1 DE 2</div>
+    <h2 class="text-3xl font-extrabold text-white leading-tight mb-4">Ingresa tu número de documento</h2>
+    
+    <p class="text-gray-300 text-sm mb-10 leading-relaxed font-light">
+        Lo usamos para ubicar tu registro y generar tu ficho. No necesitas contraseña.
+    </p>
+
+    @if($errors->any())
+        <div class="bg-red-900/50 text-red-200 p-3 rounded-md mb-6 text-sm border border-red-800 text-left">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    <form action="{{ route('aprendiz.buscar') }}" method="POST" class="mt-auto flex flex-col h-full">
+        @csrf
+        <div class="mb-4">
+            <label class="block text-xs font-mono text-gray-400 mb-2 uppercase tracking-wide">Documento de identidad</label>
+            <input type="text" name="documento" placeholder="10 45x xx8 12" required 
+                class="w-full bg-theme-panel text-white font-mono text-lg px-4 py-3 rounded-xl border border-theme-mustard focus:outline-none focus:ring-1 focus:ring-theme-mustard transition-colors">
+        </div>
+        
+        <div class="mt-8 flex-grow flex flex-col justify-end pb-4">
+            <button type="submit" class="w-full py-4 bg-theme-mustard text-[#593d05] hover:bg-yellow-500 font-extrabold rounded-xl transition-colors shadow-lg text-lg flex items-center justify-center gap-2">
                 Ver mi ficho &rarr;
             </button>
-        </form>
-        
-        <div class="mt-6 text-sm">
-            <a href="{{ route('login') }}" class="text-sena hover:underline">Acceso Staff / Admin</a>
+            <p class="text-xs text-gray-400 text-center mt-6 px-2 font-light leading-relaxed">
+                ¿Tu documento no aparece? Acércate al stand de soporte cerca a la entrada principal.
+            </p>
         </div>
-    </div>
+    </form>
+</div>
 @endsection
