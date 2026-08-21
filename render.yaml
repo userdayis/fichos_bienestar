@@ -6,3 +6,46 @@ services:
     plan: starter
     branch: main
     healthCheckPath: /
+    envVars:
+      - key: APP_NAME
+        value: "Día del Aprendiz"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "true"
+      - key: APP_KEY
+        value: base64:mMZ6kbMJUr5WGEqKIMB+u2EVsnu/Y8Tqc2JEQnKlrUI=
+      - key: APP_URL
+        value: https://fichos-bienestar.onrender.com
+      - key: APP_TIMEZONE
+        value: America/Bogota
+      - key: APP_LOCALE
+        value: es
+      - key: APP_FALLBACK_LOCALE
+        value: es
+      - key: APP_FAKER_LOCALE
+        value: es_ES
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: aws-0-sa-east-1.pooler.supabase.com
+      - key: DB_PORT
+        value: "6543"
+      - key: DB_DATABASE
+        value: postgres
+      - key: DB_USERNAME
+        value: postgres.izhkldmcfobdjwglxwhc
+      - key: DB_PASSWORD
+        value: "3106016301Dayam*"
+      - key: DB_SSLMODE
+        value: require
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_LIFETIME
+        value: "120"
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
