@@ -3,7 +3,7 @@ FROM php:8.3-fpm
 # Configurar variables de entorno para Composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Instalar dependencias del sistema
+# Instalar dependencias del sistema y Node.js para Vite
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -14,10 +14,10 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
-    nginx
-
-# Limpiar caché
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+    nginx \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalar extensiones de PHP
 RUN docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd zip
@@ -32,7 +32,10 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Instalar dependencias de Composer (optimizadas para producción)
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-scripts
+
+# Instalar dependencias de Node y compilar assets (Vite)
+RUN npm install && npm run build
 
 # Configurar Nginx
 COPY docker/nginx.conf /etc/nginx/sites-available/default
