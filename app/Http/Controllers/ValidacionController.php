@@ -36,7 +36,9 @@ class ValidacionController extends Controller
             'actividad_id' => 'required|exists:actividades,id',
         ]);
 
-        $codigo = strtoupper(trim($request->input('codigo')));
+        $codigo = trim($request->input('codigo'));
+        $codigoUpper = strtoupper($codigo);
+        $codigoLower = strtolower($codigo);
         $actividadId = $request->input('actividad_id');
         $user = auth()->user();
 
@@ -49,10 +51,12 @@ class ValidacionController extends Controller
         }
 
         try {
-            $resultado = DB::transaction(function () use ($codigo, $actividadId, $user) {
+            $resultado = DB::transaction(function () use ($codigo, $codigoUpper, $codigoLower, $actividadId, $user) {
                 // Buscar el ficho con lock para evitar race conditions
-                $ficho = Ficho::where(function ($query) use ($codigo) {
-                        $query->where('codigo_qr', $codigo)
+                $ficho = Ficho::where(function ($query) use ($codigo, $codigoUpper, $codigoLower) {
+                        $query->where('codigo_qr', $codigoLower)
+                              ->orWhere('codigo_qr', $codigo)
+                              ->orWhere('codigo_respaldo', $codigoUpper)
                               ->orWhere('codigo_respaldo', $codigo);
                     })
                     ->where('actividad_id', $actividadId)
@@ -61,8 +65,10 @@ class ValidacionController extends Controller
 
                 if (!$ficho) {
                     // Verificar si el código existe pero es de otra actividad
-                    $fichoOtraActividad = Ficho::where(function ($query) use ($codigo) {
-                        $query->where('codigo_qr', $codigo)
+                    $fichoOtraActividad = Ficho::where(function ($query) use ($codigo, $codigoUpper, $codigoLower) {
+                        $query->where('codigo_qr', $codigoLower)
+                              ->orWhere('codigo_qr', $codigo)
+                              ->orWhere('codigo_respaldo', $codigoUpper)
                               ->orWhere('codigo_respaldo', $codigo);
                     })->first();
 
