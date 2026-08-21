@@ -1,0 +1,44 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-white leading-tight">Nueva Actividad</h2>
+    </x-slot>
+
+    <div class="py-10">
+        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-theme-panel rounded-2xl border border-white/10 shadow-xl p-8">
+                @if($errors->any())
+                    <div class="bg-red-900/40 text-red-300 p-4 rounded-xl mb-6 border border-red-800/40 text-sm">
+                        <ul class="list-disc ml-4">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('admin.actividades.store') }}">
+                    @csrf
+                    <div class="mb-5">
+                        <label class="block text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Nombre</label>
+                        <input type="text" name="nombre" value="{{ old('nombre') }}" required
+                            class="w-full bg-theme-bg border border-white/20 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-theme-mustard focus:ring-1 focus:ring-theme-mustard placeholder-gray-600">
+                    </div>
+                    <div class="mb-5">
+                        <label class="block text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Descripción</label>
+                        <textarea name="descripcion" rows="2" class="w-full bg-theme-bg border border-white/20 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-theme-mustard focus:ring-1 focus:ring-theme-mustard placeholder-gray-600">{{ old('descripcion') }}</textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-5">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Ícono (emoji)</label>
+                            <input type="text" name="icono" value="{{ old('icono', '🎫') }}" class="w-full bg-theme-bg border border-white/20 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-theme-mustard">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Orden</label>
+                            <input type="number" name="orden" value="{{ old('orden', 0) }}" min="0" class="w-full bg-theme-bg border border-white/20 text-white px-4 py-3 rounded-xl focus:outline-none focus:border-theme-mustard">
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-8">
+                        <a href="{{ route('admin.actividades.index') }}" class="px-5 py-3 bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 font-semibold rounded-xl transition-colors text-sm">← Volver</a>
+                        <button type="submit" class="px-6 py-3 bg-theme-mustard text-[#4a3200] hover:bg-yellow-500 font-extrabold rounded-xl transition-colors shadow-lg text-sm">Crear Actividad</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
