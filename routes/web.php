@@ -20,6 +20,7 @@ Route::post('/buscar', [AprendizController::class, 'buscar'])
     ->middleware('throttle:15,1')
     ->name('aprendiz.buscar');
 Route::get('/carnet/{documento}', [AprendizController::class, 'carnet'])->name('aprendiz.carnet');
+Route::get('/carnet/{documento}/estado', [AprendizController::class, 'estadoJson'])->name('aprendiz.estado');
 
 /*
 |--------------------------------------------------------------------------

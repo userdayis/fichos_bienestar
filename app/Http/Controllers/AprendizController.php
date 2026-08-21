@@ -73,4 +73,41 @@ class AprendizController extends Controller
 
         return view('aprendiz.carnet', compact('aprendiz', 'fichos', 'totalActividades', 'entregados'));
     }
+
+    /**
+     * Endpoint JSON para polling silencioso en tiempo real del carnet.
+     */
+    public function estadoJson(string $documento)
+    {
+        $aprendiz = Aprendiz::where('documento', trim($documento))->first();
+        if (!$aprendiz) {
+            return response()->json(['error' => 'No encontrado'], 404);
+        }
+
+        $fichos = $aprendiz->fichos()
+            ->with('actividad')
+            ->join('actividades', 'fichos.actividad_id', '=', 'actividades.id')
+            ->where('actividades.activa', true)
+            ->orderBy('actividades.orden')
+            ->select('fichos.*')
+            ->get();
+
+        $totalActividades = $fichos->count();
+        $entregados = $fichos->where('estado', 'entregado')->count();
+
+        return response()->json([
+            'total' => $totalActividades,
+            'entregados' => $entregados,
+            'fichos' => $fichos->map(function ($f) {
+                return [
+                    'id' => $f->id,
+                    'codigo_qr' => $f->codigo_qr,
+                    'codigo_respaldo' => $f->codigo_respaldo,
+                    'actividad_id' => $f->actividad_id,
+                    'estado' => $f->estado,
+                    'entregado_en' => $f->entregado_en ? $f->entregado_en->format('h:i a') : null,
+                ];
+            })
+        ]);
+    }
 }
