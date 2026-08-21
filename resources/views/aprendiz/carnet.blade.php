@@ -51,13 +51,15 @@
 
                         <!-- QR o Check -->
                         <div class="flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden
-                            {{ $ficho->estado === 'entregado' ? 'bg-white/5' : 'bg-white' }} flex items-center justify-center">
+                            {{ $ficho->estado === 'entregado' ? 'bg-white/5' : 'bg-white p-1' }} flex items-center justify-center">
                             @if($ficho->estado === 'entregado')
                                 <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
                             @else
-                                {!! QrCode::size(80)->generate(url('/carnet/'.$aprendiz->documento).'#qr-'.$ficho->codigo_qr) !!}
+                                <div class="w-full h-full flex items-center justify-center">
+                                    {!! QrCode::size(72)->margin(0)->generate($ficho->codigo_qr) !!}
+                                </div>
                             @endif
                         </div>
 

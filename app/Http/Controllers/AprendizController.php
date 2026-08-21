@@ -42,11 +42,28 @@ class AprendizController extends Controller
      */
     public function carnet(string $documento)
     {
-        $aprendiz = Aprendiz::where('documento', $documento)->firstOrFail();
+        $aprendiz = Aprendiz::where('documento', trim($documento))->firstOrFail();
+
+        // Asegurar que el aprendiz tenga sus fichos para todas las actividades activas
+        $actividades = \App\Models\Actividad::activas()->get();
+        foreach ($actividades as $actividad) {
+            \App\Models\Ficho::firstOrCreate(
+                [
+                    'aprendiz_id' => $aprendiz->id,
+                    'actividad_id' => $actividad->id,
+                ],
+                [
+                    'codigo_qr' => (string) \Illuminate\Support\Str::uuid(),
+                    'codigo_respaldo' => \App\Models\Ficho::generarCodigoRespaldo(),
+                    'estado' => 'pendiente',
+                ]
+            );
+        }
 
         $fichos = $aprendiz->fichos()
             ->with('actividad')
             ->join('actividades', 'fichos.actividad_id', '=', 'actividades.id')
+            ->where('actividades.activa', true)
             ->orderBy('actividades.orden')
             ->select('fichos.*')
             ->get();
